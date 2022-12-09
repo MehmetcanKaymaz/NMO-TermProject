@@ -65,16 +65,15 @@ class NMPC:
         opti = ca.Opti()
 
         X = opti.variable(self._x_dim, self._N+1)
-        self.P = opti.parameter(self._x_dim, self._N+1)
+        self.P = opti.parameter(self._x_dim, 2)
         self.U = opti.variable(self._u_dim, self._N)
 
         cost = 0
 
         opti.subject_to(X[:, 0] == self.P[:, 0])
 
-        cost += f_cost_track((X[:, self._N]-self.P[:, self._N]))
+        #cost += f_cost_track((X[:, self._N]-self.P[:, self._N]))
         for k in range(self._N):
-            
             if k == 0:
                 cost += 0
             else:
@@ -85,6 +84,7 @@ class NMPC:
             opti.subject_to(self.U[:, k] >= umin)
             opti.subject_to(X[:, k+1] >= xmin)
             opti.subject_to(X[:, k+1] <= xmax)
+            opti.subject_to((X[:, self._N]-self.P[:, 1]).T@(X[:, self._N]-self.P[:, 1])<=.1)
 
         ipopt_options = {
             'verbose': False,

@@ -10,13 +10,11 @@ x=model.x
 refx=10
 refy=10
 
-T=4
+T=10
 dt=0.01
 N=int(T/dt)
 
-traj=np.ones((5,N))
-traj[0,:]=traj[0,:]*refx
-traj[1,:]=traj[1,:]*refy
+traj=np.array([refx,refy,0,0,0]).reshape((5,1))
 
 control=NMPC(N=N)
 
