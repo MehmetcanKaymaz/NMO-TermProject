@@ -22,10 +22,10 @@ u=control.run_controller(x0=x,ref_states=traj)
 
 for i in range(N):
     x=model.step(u=u[:,i])
-    #if np.sqrt((x[0]-refx)**2+(x[1]-refy)**2)<1:
-        #break
+    if np.sqrt((x[0]-refx)**2+(x[1]-refy)**2)<1:
+        break
 
-model.vis()
+model.vis_sim()
     
 
 

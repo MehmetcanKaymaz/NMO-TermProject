@@ -72,8 +72,9 @@ class NMPC:
 
         opti.subject_to(X[:, 0] == self.P[:, 0])
 
-        #cost += f_cost_track((X[:, self._N]-self.P[:, self._N]))
+        #cost += f_cost_track((X[:, self._N]-self.P[:, 1]))
         for k in range(self._N):
+            cost += f_cost_track((X[:, k]-self.P[:, 1]))
             if k == 0:
                 cost += 0
             else:
@@ -84,7 +85,7 @@ class NMPC:
             opti.subject_to(self.U[:, k] >= umin)
             opti.subject_to(X[:, k+1] >= xmin)
             opti.subject_to(X[:, k+1] <= xmax)
-            opti.subject_to((X[:, self._N]-self.P[:, 1]).T@(X[:, self._N]-self.P[:, 1])<=.1)
+            #opti.subject_to((X[:2, self._N]-self.P[:2, 1]).T@(X[:2, self._N]-self.P[:2, 1])<=.1)
 
         ipopt_options = {
             'verbose': False,
