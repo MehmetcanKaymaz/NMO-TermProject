@@ -5,11 +5,11 @@ import torch
 model=BaseModel()
 policy=PolicyNet()
 
-policy_path="DModels/policynet.pth"
+policy_path="DModels/policynet_2.pth"
 
 policy.load(policy_path)
 
-T=1.5
+T=1.7
 dt=0.01
 N=int(T/dt)
 

@@ -58,7 +58,7 @@ class CustomEnvBase(gym.Env):
 
         low=-1
         high=1
-        self.action_space = spaces.Box(low,high)
+        self.action_space = spaces.Box(low,high,shape=(1,))
         
         low=np.array([-np.inf,-np.inf,-np.inf],dtype=np.float64)
         high=np.array([np.inf,np.inf,np.inf],dtype=np.float64)
@@ -73,13 +73,13 @@ class CustomEnvBase(gym.Env):
         
         info={}
         
-        reward=-np.sqrt((10-x[0])**2+(10-x[1])**2)/100
+        reward=-np.sqrt((11-x[0])**2+(10-x[1])**2)/10
         
         done=False
-        if -reward<=1:
+        if -reward<=.1:
             done=True
         self.index+=1
-        if self.index>=1000:
+        if self.index>=200:
             done=True
 
         

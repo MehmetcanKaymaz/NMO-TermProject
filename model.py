@@ -50,7 +50,7 @@ class BaseModel:
             plt.cla()
 
             ax.scatter(0,0,s=10,c="blue")
-            ax.scatter(10,10,s=10,c="red")
+            ax.scatter(11,10,s=10,c="red")
 
             ax.plot(states[:i,0],states[:i,1],color="orange")
 

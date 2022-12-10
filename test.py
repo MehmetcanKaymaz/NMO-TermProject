@@ -5,10 +5,10 @@ import numpy as np
 model=BaseModel()
 x=model.x
 
-refx=10
+refx=11
 refy=10
 
-T=1.5
+T=1.7
 dt=0.01
 N=int(T/dt)
 

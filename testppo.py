@@ -1,9 +1,9 @@
-from EnvGym import CustomEnv
+from EnvGym import CustomEnvBase
 from stable_baselines3 import PPO
 
-env=CustomEnv()
+env=CustomEnvBase()
 
-model = PPO.load("modelppo/model_5000000")
+model = PPO.load("modelppo/model_100000")
 
 obs = env.reset()
 while True:
