@@ -24,10 +24,10 @@ class CustomEnvComplex(gym.Env):
         action_u=np.array([action[0]*10,action[1]*np.pi])
         x=self.model.step(u=action_u)
         info={}
-        reward=-np.sqrt((10-x[0])**2+(10-x[1])**2)/100
+        reward=-np.sqrt((10-x[0])**2+(10-x[1])**2)/10
         
         done=False
-        if -reward<=1:
+        if -reward<=.05:
             done=True
         self.index+=1
         if self.index>=1000:
@@ -73,10 +73,10 @@ class CustomEnvBase(gym.Env):
         
         info={}
         
-        reward=-np.sqrt((11-x[0])**2+(10-x[1])**2)/10
+        reward=-np.sqrt((10-x[0])**2+(10-x[1])**2)/10
         
         done=False
-        if -reward<=.1:
+        if -reward<=.05:
             done=True
         self.index+=1
         if self.index>=200:
@@ -85,8 +85,8 @@ class CustomEnvBase(gym.Env):
         
         return x.reshape(3,), reward[0], done, info
 
-    def reset(self):
-        self.model=BaseModel()
+    def reset(self,x0=np.zeros((3,1))):
+        self.model=BaseModel(x0=x0)
         x=self.model.x
         self.index=0
 

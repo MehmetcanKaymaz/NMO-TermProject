@@ -3,11 +3,13 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 from matplotlib.offsetbox import (OffsetImage, AnnotationBbox)
 import cv2
+import os
 
 class BaseModel:
     def __init__(self,x0=np.zeros((3,1)),dt=0.01,V=10,N=1,t=0):
         self.dt=dt
 
+        self.x0=x0
         self.x=x0
         self.states=[]
         self.controls=[]
@@ -36,12 +38,13 @@ class BaseModel:
         xdot[2]=u
         return xdot
 
-    def vis_sim(self):
+    def vis_sim(self,index=1,save=False,show=True):
         states=np.array(self.states)
         N=len(self.states)
 
         image_folder="../lamborghini_cut.jpg"
         image=mpimg.imread(image_folder)
+        os.mkdir("figs/model_2_{}".format(index))
 
         fig, ax = plt.subplots(figsize = (12, 12))
 
@@ -49,10 +52,10 @@ class BaseModel:
             
             plt.cla()
 
-            ax.scatter(0,0,s=10,c="blue")
-            ax.scatter(11,10,s=10,c="red")
+            ax.scatter(0,0,s=30,c="blue")
+            ax.scatter(10-self.x0[0],10-self.x0[1],s=30,c="red")
 
-            ax.plot(states[:i,0],states[:i,1],color="orange")
+            ax.plot(states[:i,0]-self.x0[0],states[:i,1]-self.x0[1],color="orange")
 
             if self.t==0:
                 angle=states[i,2]
@@ -63,12 +66,16 @@ class BaseModel:
                 break
             image_r=self.rotate_bound(image,int(180-angle*180/np.pi))
             imagebox = OffsetImage(image_r, zoom = 0.08)
-            ab = AnnotationBbox(imagebox, (states[i,0], states[i,1]), frameon = False)
+            ab = AnnotationBbox(imagebox, (states[i,0]-self.x0[0], states[i,1])-self.x0[1], frameon = False)
             ax.add_artist(ab)
             plt.xlim([-2,12])
             plt.ylim([-2,12])
+            plt.title("Model {} Eval".format(index))
+            if show:
+                plt.pause(0.001)
+            if save:
+                plt.savefig("figs/model_2_{}/fig_{}".format(index,i))
             
-            plt.pause(0.001)
 
 
     def rotate_bound(self,image, angle):

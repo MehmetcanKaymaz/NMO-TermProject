@@ -8,8 +8,8 @@ res=check_env(env)
 
 
 model = PPO("MlpPolicy", env, verbose=0,tensorboard_log="./tensorboard/")
-model.learn(total_timesteps=100000)
-model.save("modelppo/model_100000")
+model.learn(total_timesteps=200000)
+model.save("modelppo/model_200000")
 
 """model = PPO.load("modelppo/model_5000000")
 model.set_env(env)
